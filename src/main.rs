@@ -20,3 +20,16 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("{}", hex_string.to_ascii_uppercase());
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_decode() {
+        let base64_string = "dGhpcyBpcyBhIHRlc3Q=";
+        let bytes = general_purpose::STANDARD.decode(base64_string).unwrap();
+        let hex_string = hex::encode(bytes);
+        assert_eq!(hex_string, "7468697320697320612074657374");
+    }
+}

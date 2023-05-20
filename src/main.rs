@@ -9,7 +9,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         eprintln!("not enough arguments");
         process::exit(1)
     }
-    let base64_string = args[1].clone();
+    let base64_string = &args[1];
     let bytes = general_purpose::STANDARD
         .decode(base64_string)
         .unwrap_or_else(|err| {

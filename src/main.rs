@@ -10,7 +10,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         process::exit(1)
     }
     let base64_string = args[1].clone();
-    let bytes = general_purpose::STANDARD.decode(base64_string).unwrap();
+    let bytes = general_purpose::STANDARD
+        .decode(base64_string)
+        .unwrap_or_else(|err| {
+            eprintln!("Problem decoding string from base64: {err}");
+            process::exit(1)
+        });
     let hex_string = hex::encode(bytes);
     println!("{}", hex_string.to_ascii_uppercase());
     Ok(())

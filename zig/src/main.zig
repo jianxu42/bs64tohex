@@ -21,6 +21,6 @@ pub fn main() !void {
     const stdout_file = std.io.getStdOut().writer();
     var bw = std.io.bufferedWriter(stdout_file);
     const stdout = bw.writer();
-    try stdout.print("Hex: {s}", .{std.fmt.fmtSliceHexLower(decoded)});
+    try stdout.print("{s}", .{std.fmt.fmtSliceHexUpper(decoded)});
     try bw.flush();
 }

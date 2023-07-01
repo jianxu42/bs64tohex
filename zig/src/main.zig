@@ -17,5 +17,10 @@ pub fn main() !void {
     var buffer: [0x100]u8 = undefined;
     var decoded = buffer[0..try base64.standard.Decoder.calcSizeForSlice(base64String)];
     try base64.standard.Decoder.decode(decoded, base64String);
-    std.debug.print("Hex: {s}", .{std.fmt.fmtSliceHexLower(decoded)});
+
+    const stdout_file = std.io.getStdOut().writer();
+    var bw = std.io.bufferedWriter(stdout_file);
+    const stdout = bw.writer();
+    try stdout.print("Hex: {s}", .{std.fmt.fmtSliceHexLower(decoded)});
+    try bw.flush();
 }
